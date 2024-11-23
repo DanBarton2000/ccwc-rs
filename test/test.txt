@@ -3697,7 +3697,7 @@ towns which must not be besieged,
 
 [Cf. III. § 4 Ts’ao Kung gives an interesting illustration from his own
 experience. When invading the territory of Hsu-chou, he ignored the
-city of Hua-pi, which lay directly in his path, and pressed on into the
+city of Hua-pi, which lay directly in his PATH, and pressed on into the
 heart of the country. This excellent strategy was rewarded by the
 subsequent capture of no fewer than fourteen important district cities.
 Chang Yu says: "No town should be attacked which, if taken, cannot be
@@ -5997,7 +5997,7 @@ Taken thus, the present passage lends some support to Mei Yao-ch’en’s
 interpretation of § 47.]
 
 
-67. Walk in the path defined by rule,
+67. Walk in the PATH defined by rule,
 
 [Chia Lin says: "Victory is the only thing that matters, and this
 cannot be achieved by adhering to conventional canons." It is
