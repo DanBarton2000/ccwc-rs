@@ -1,5 +1,7 @@
 use clap::Parser;
 use std::fs;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
 use std::path::PathBuf;
 
 #[derive(Parser, Debug)]
@@ -7,23 +9,29 @@ use std::path::PathBuf;
 struct Args {
     #[clap(short='c', action)]
     bytes: bool,
+    #[clap(short='l', action)]
+    lines: bool,
     path: PathBuf,
 }
 
 fn main() {
     let args = Args::parse();
 
+    let mut result = String::new();
+
     if args.bytes {
-        match get_bytes(&args.path) {
-            Ok(bytes) => {
-                println!("{} {}", bytes, &args.path.to_str().unwrap());
-            }
-            Err(e) => {
-                println!("{}", e);
-            }
-        }
-        return
+        result.push_str(&get_bytes(&args.path).unwrap().to_string());
+        result.push_str(" ");
     }
+
+    if args.lines {
+        result.push_str(&get_lines(&args.path).unwrap().to_string());
+        result.push_str(" ");
+    }
+
+    result.push_str(&args.path.to_str().unwrap());
+
+    println!("{}", result);
 }
 
 fn get_bytes(path_buf: &PathBuf) -> Result<u64, std::io::Error> {
@@ -31,7 +39,14 @@ fn get_bytes(path_buf: &PathBuf) -> Result<u64, std::io::Error> {
 }
 
 fn get_lines(path_buf: &PathBuf) -> Result<u64, std::io::Error> {
-    Ok(0)
+    let file = File::open(&path_buf)?;
+    let reader = BufReader::new(file);
+
+    let mut count: u64 = 0;
+    for _ in reader.lines() {
+        count += 1;
+    }
+    Ok(count)
 }
 
 fn get_words(path_buf: &PathBuf) -> Result<u64, std::io::Error> {
