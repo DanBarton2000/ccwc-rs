@@ -13,6 +13,8 @@ struct Args {
     lines: bool,
     #[clap(short='w', action)]
     words: bool,
+    #[clap(short='m', action)]
+    characters: bool,
     path: PathBuf,
 }
 
@@ -33,6 +35,11 @@ fn main() {
 
     if args.words {
         result.push_str(&get_words(&args.path).unwrap().to_string());
+        result.push_str(" ");
+    }
+
+    if args.characters {
+        result.push_str(&get_characters(&args.path).unwrap().to_string());
         result.push_str(" ");
     }
 
@@ -69,7 +76,17 @@ fn get_words(path_buf: &PathBuf) -> Result<u64, std::io::Error> {
 }
 
 fn get_characters(path_buf: &PathBuf) -> Result<u64, std::io::Error> {
-    Ok(0)
+    let file = File::open(&path_buf)?;
+    let mut reader = BufReader::new(file);
+    let mut string = String::new();
+
+    let mut characters: u64 = 0;
+    while reader.read_line(&mut string)? > 0 {
+        characters += string.chars().count() as u64;
+        string.clear();
+    }
+
+    Ok(characters)
 }
 
 #[cfg(test)]
