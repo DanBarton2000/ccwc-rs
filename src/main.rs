@@ -11,6 +11,8 @@ struct Args {
     bytes: bool,
     #[clap(short='l', action)]
     lines: bool,
+    #[clap(short='w', action)]
+    words: bool,
     path: PathBuf,
 }
 
@@ -26,6 +28,11 @@ fn main() {
 
     if args.lines {
         result.push_str(&get_lines(&args.path).unwrap().to_string());
+        result.push_str(" ");
+    }
+
+    if args.words {
+        result.push_str(&get_words(&args.path).unwrap().to_string());
         result.push_str(" ");
     }
 
@@ -50,7 +57,15 @@ fn get_lines(path_buf: &PathBuf) -> Result<u64, std::io::Error> {
 }
 
 fn get_words(path_buf: &PathBuf) -> Result<u64, std::io::Error> {
-    Ok(0)
+    let file = File::open(&path_buf)?;
+    let reader = BufReader::new(file);
+
+    let mut words: u64 = 0;
+    for line in reader.lines() {
+        words += line?.split_whitespace().count() as u64;
+    }
+
+    Ok(words)
 }
 
 fn get_characters(path_buf: &PathBuf) -> Result<u64, std::io::Error> {
