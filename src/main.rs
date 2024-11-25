@@ -23,22 +23,24 @@ fn main() {
 
     let mut result = String::new();
 
-    if args.bytes {
+    let all: bool = !args.bytes && !args.lines && !args.words && !args.characters;
+
+    if args.bytes || all {
         result.push_str(&get_bytes(&args.path).unwrap().to_string());
         result.push_str(" ");
     }
 
-    if args.lines {
+    if args.lines || all {
         result.push_str(&get_lines(&args.path).unwrap().to_string());
         result.push_str(" ");
     }
 
-    if args.words {
+    if args.words || all {
         result.push_str(&get_words(&args.path).unwrap().to_string());
         result.push_str(" ");
     }
 
-    if args.characters {
+    if args.characters || all {
         result.push_str(&get_characters(&args.path).unwrap().to_string());
         result.push_str(" ");
     }
