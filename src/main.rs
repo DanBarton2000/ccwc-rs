@@ -7,13 +7,13 @@ use std::process::exit;
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Args {
-    #[clap(short='c', action)]
+    #[clap(short='c', help="bytes", action)]
     bytes: bool,
-    #[clap(short='l', action)]
+    #[clap(short='l', help="lines",action)]
     lines: bool,
-    #[clap(short='w', action)]
+    #[clap(short='w', help="words",action)]
     words: bool,
-    #[clap(short='m', action)]
+    #[clap(short='m', help="characters",action)]
     characters: bool,
     path: Option<PathBuf>,
 }
